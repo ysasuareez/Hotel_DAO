@@ -31,8 +31,8 @@ public class ReservaView {
 	private JButton btnReservar;
 	private JButton btnAnterior;
 	private JButton btnSiguiente;
-	@SuppressWarnings("unused")
 	private Bungalow b = new Bungalow(null, null, indexVista, indexVista, indexVista, indexVista);
+	private String textCheck = "DISPONIBLE";
 
 	/**
 	 * Create the application.
@@ -99,7 +99,7 @@ public class ReservaView {
 		lblPrecio.setBounds(10, 204, 131, 24);
 		frame.getContentPane().add(lblPrecio);
 		
-		lblDisponibilidad = new JLabel("DISPONIBLE");
+		lblDisponibilidad = new JLabel(textCheck);
 		lblDisponibilidad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDisponibilidad.setFont(new Font("Sylfaen", Font.BOLD, 25));
 		lblDisponibilidad.setForeground(Color.GREEN);
@@ -116,8 +116,9 @@ public class ReservaView {
 				Bungalow b = bungalows.get(indexVista);
 				if(b.getDisponible().equals(Estado.Disponible)) {
 					b.setDisponible(Estado.Ocupado);
-					JOptionPane.showMessageDialog(btnReservar, "¡Reserva realizada!");
-					checkReserva(b);
+					JOptionPane.showMessageDialog(btnReservar, "¡Reserva realizada! El horario de entrada del hotel es antes de las 18h, y de salida antes de las 13h.");
+					Estado check = b.getDisponible();
+					checkReserva(b, check);
 				} else {
 					JOptionPane.showMessageDialog(btnReservar, "Reserva no disponible: bungalow ocupado");
 				}
@@ -142,7 +143,8 @@ public class ReservaView {
 					lblHabitaciones.setText(String.valueOf(b.getHabitaciones()) + " habitaciones");
 					lblBaños.setText(String.valueOf(b.getBaños()) + " baños");
 					lblPrecio.setText(String.valueOf(b.getPrecio()) + " €");
-					checkReserva(b);
+					Estado check = b.getDisponible();
+					checkReserva(b, check);
 				}
 			}
 		});
@@ -164,7 +166,8 @@ public class ReservaView {
 					lblHabitaciones.setText(String.valueOf(b.getHabitaciones()) + " habitaciones");
 					lblBaños.setText(String.valueOf(b.getBaños()) + " baños");
 					lblPrecio.setText(String.valueOf(b.getPrecio()) + " €");
-					checkReserva(b);
+					Estado check = b.getDisponible();
+					checkReserva(b, check);
 				}
 			}
 		});
@@ -173,15 +176,23 @@ public class ReservaView {
 		
 	}
 	
-	public void checkReserva(Bungalow b) {
+	// / / / / / / / / / / /   COMPRUEBA LA DISPONIBILIDAD DEL BUNGALOW SELECCIONADO
+	public Estado checkReserva(Bungalow b, Estado check) {
+		Estado checked = check;
 		
-		if(b.getDisponible().equals(Estado.Ocupado)) {
-			
+		return check;
+	}
+	
+	/* / / / / / / / / / / /   CAMBIA EL COLOR DEL LABEL Y DEVUELVE EL VALOR DEL TEXTO DE DISPONIBILIDAD,
+								DEPENDIENDO DEL VALOR DEL ANTERIOR MÉTODO  */
+	public String checkedReserva(Bungalow b, Estado check) {
+		if(check.equals(Estado.Ocupado)) {
 			lblDisponibilidad.setForeground(Color.RED);
-			lblDisponibilidad.setText("NO DISPONIBLE");
+			textCheck = "NO DISPONIBLE";
 		} else {
 			lblDisponibilidad.setForeground(Color.GREEN);
-			lblDisponibilidad.setText("DISPONIBLE");
+			textCheck = "DISPONIBLE";
 		}
+		return textCheck;
 	}
 }

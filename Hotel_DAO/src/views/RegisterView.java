@@ -126,26 +126,54 @@ public class RegisterView {
 		btnRegistrar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				int edad = 0;
 				String username = tfUser.getText();
 				String password = new String(passwordRegister.getPassword());
 				String nombre = tfNombre.getText();
-				int edad = Integer.parseInt(tfEdad.getText());
+				edad = Integer.parseInt(tfEdad.getText());
 				String dni = tfDNI.getText();
 				
-				// / / / / / / / / / CONTROL DE ERRORES / / / / / / / / 
-				if(edad < 18) {
-						JOptionPane.showMessageDialog(btnRegistrar, "Debes ser mayor de 18 años para registrarte");
+				
+																															@SuppressWarnings("unused")
+				boolean mayorEdad = edadError(edad);
+				if(mayorEdad = true) {
+																															@SuppressWarnings("unused")
+					boolean dniErrorFound = dniError(dni);
+					if(dniErrorFound = false) {
+					Usuario u1 = new Usuario(username, password, nombre, edad, dni);
+					Usuario.users.add(u1);
+					JOptionPane.showMessageDialog(btnRegistrar, "Registrado correctamente");
+					
+					new LoginView();
+					frame.dispose();
 					} else {
-						
-						Usuario u1 = new Usuario(username, password, nombre, edad, dni);
-						Usuario.users.add(u1);
-						JOptionPane.showMessageDialog(btnRegistrar, "Registrado correctamente");
-						
-						new LoginView();
-						frame.dispose();
+						JOptionPane.showMessageDialog(btnRegistrar, "Introduzca un DNI válido");
 					}
+				} else if(mayorEdad = false) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Introduce una edad válida (debes ser mayor de 18)");
+				}
+			}	
+				// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN LA EDAD / / / / / / / / 
+				public boolean edadError(int edad) {
+					boolean mayorEdad = false;
+					if(edad < 18 && edad > 0) {
+						mayorEdad = false;
+					} else {
+						mayorEdad = true;
+					}
+				return mayorEdad;
 			}
 				
+				// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN EL DNI / / / / / / / / / /
+				public boolean dniError(String dni) {
+					boolean dniError = true;
+					if(dni.length() == 9) {
+						dniError = false;
+					} else {
+						dniError = true;
+					}
+					return dniError;
+				}
 			
 			
 		});
