@@ -1,10 +1,13 @@
 package models;
 
 public class Bungalow {
+	
+	
 	// / / / / / / / / ATRIBUTOS
 	public static enum Estado {
 		Disponible, Ocupado
 	}
+	
 	private Estado disponible;
 	private String nombre;
 	private int personas;

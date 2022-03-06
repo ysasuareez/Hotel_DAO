@@ -154,31 +154,31 @@ public class RegisterView {
 				}
 			}	
 			
-				// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN LA EDAD / / / / / / / / 
-				public boolean edadError(int edad) {
-					boolean mayorEdad = false;
-					if(edad < 18 && edad > 0) {
-						mayorEdad = false;
-					} else {
-						mayorEdad = true;
-					}
-				return mayorEdad;
-			}
-				
-				// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN EL DNI / / / / / / / / / /
-				public boolean dniError(String dni) {
-					boolean dniError = true;
-					if(dni.length() == 9) {
-						dniError = false;
-					} else {
-						dniError = true;
-					}
-					return dniError;
-				}
-			
 			
 		});
 		btnRegistrar.setBounds(297, 165, 115, 34);
 		frame.getContentPane().add(btnRegistrar);
+	}
+	
+	// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN LA EDAD / / / / / / / / 
+	public boolean edadError(int edad) {
+		boolean mayorEdad = false;
+		if(edad < 18) {
+			mayorEdad = false;
+		} else {
+			mayorEdad = true;
+		}
+	return mayorEdad;
+}
+	
+	// / / / / / / / / / MÉTODO PARA CONTROL DE ERRORES EN EL DNI / / / / / / / / / /
+	public boolean dniError(String dni) {
+		boolean dniError = true;
+		if(dni.length() == 9) {
+			dniError = false;
+		} else {
+			dniError = true;
+		}
+		return dniError;
 	}
 }
