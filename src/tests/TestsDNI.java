@@ -11,6 +11,11 @@ class TestsDNI {
 	@Test
 	void longitudDNI() {
 		
+		/*
+		 * Iniciamos las pruebas del método que comprueba si un DNI es correcto o no.
+		 * Creamos tres DNI distintos y vemos como el método, rechaza o aprueba dichos DNI.
+		 */
+		
 		System.out.println("************ Inicio Prueba DNI ************");
 		String dni1 = "4523A";
 		String dni2 = "76452344A";

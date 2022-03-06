@@ -11,6 +11,12 @@ class TestMayorEdad {
 	@Test
 	void MayorEdad() {
 		
+		/*
+		 * Iniciamos las pruebas del método que comprueba si la edad del
+		 * nuevo usuario es valida, para ello debe ser mayor de edad.
+		 * Creamos cuatro edades distintas y comprobamos el resultado.
+		 */
+		
 		System.out.println("************ Inicio Prueba Mayoría de Edad ************");
 		int edad1 = 15;
 		int edad2 = -15;

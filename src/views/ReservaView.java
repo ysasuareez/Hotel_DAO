@@ -33,6 +33,7 @@ public class ReservaView {
 	private JButton btnSiguiente;
 	private Bungalow b = new Bungalow(null, null, indexVista, indexVista, indexVista, indexVista);
 	private String textCheck = "DISPONIBLE";
+	private JButton btnAnularReservas;
 
 	/**
 	 * Create the application.
@@ -99,11 +100,13 @@ public class ReservaView {
 		lblPrecio.setBounds(10, 204, 131, 24);
 		frame.getContentPane().add(lblPrecio);
 		
-		lblDisponibilidad = new JLabel(textCheck);
+		lblDisponibilidad = new JLabel("DISPONIBLE");
 		lblDisponibilidad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDisponibilidad.setFont(new Font("Sylfaen", Font.BOLD, 25));
 		lblDisponibilidad.setForeground(Color.GREEN);
 		lblDisponibilidad.setBounds(203, 53, 221, 46);
+		lblDisponibilidad.setText("DISPONIBLE");
+		lblDisponibilidad.setText(textCheck);
 		frame.getContentPane().add(lblDisponibilidad);
 		
 		b = bungalows.get(indexVista);
@@ -118,7 +121,17 @@ public class ReservaView {
 					b.setDisponible(Estado.Ocupado);
 					JOptionPane.showMessageDialog(btnReservar, "¡Reserva realizada! El horario de entrada del hotel es antes de las 18h, y de salida antes de las 13h.");
 					Estado check = b.getDisponible();
-					checkReserva(b, check);
+					checkedReserva(b, check);
+					
+					// comprobación método color label disponibilidad
+					String color = colorCheck(b, check);
+					if(color.equals("Rojo")) {
+						lblDisponibilidad.setForeground(Color.RED);
+					} else if(color.equals("Verde")) {
+						lblDisponibilidad.setForeground(Color.GREEN);
+					}
+					
+					lblDisponibilidad.setText(textCheck);
 				} else {
 					JOptionPane.showMessageDialog(btnReservar, "Reserva no disponible: bungalow ocupado");
 				}
@@ -126,7 +139,7 @@ public class ReservaView {
 		});
 		
 		btnReservar.setFont(new Font("DejaVu Serif", Font.BOLD, 12));
-		btnReservar.setBounds(245, 193, 125, 46);
+		btnReservar.setBounds(287, 193, 125, 46);
 		frame.getContentPane().add(btnReservar);
 		
 		btnAnterior = new JButton("Anterior");
@@ -144,7 +157,17 @@ public class ReservaView {
 					lblBaños.setText(String.valueOf(b.getBaños()) + " baños");
 					lblPrecio.setText(String.valueOf(b.getPrecio()) + " €");
 					Estado check = b.getDisponible();
-					checkReserva(b, check);
+					checkedReserva(b, check);
+					
+					// comprobación método color label disponibilidad
+					String color = colorCheck(b, check);
+					if(color.equals("Rojo")) {
+						lblDisponibilidad.setForeground(Color.RED);
+					} else if(color.equals("Verde")) {
+						lblDisponibilidad.setForeground(Color.GREEN);
+					}
+					
+					lblDisponibilidad.setText(textCheck);
 				}
 			}
 		});
@@ -167,32 +190,100 @@ public class ReservaView {
 					lblBaños.setText(String.valueOf(b.getBaños()) + " baños");
 					lblPrecio.setText(String.valueOf(b.getPrecio()) + " €");
 					Estado check = b.getDisponible();
-					checkReserva(b, check);
+					checkedReserva(b, check);
+					
+					// comprobación método color label disponibilidad
+					String color = colorCheck(b, check);
+					if(color.equals("Rojo")) {
+						lblDisponibilidad.setForeground(Color.RED);
+					} else if(color.equals("Verde")) {
+						lblDisponibilidad.setForeground(Color.GREEN);
+					}
+					
+					lblDisponibilidad.setText(textCheck);
 				}
 			}
 		});
 		btnSiguiente.setBounds(313, 110, 99, 23);
 		frame.getContentPane().add(btnSiguiente);
 		
-	}
-	
-	// / / / / / / / / / / /   COMPRUEBA LA DISPONIBILIDAD DEL BUNGALOW SELECCIONADO
-	public Estado checkReserva(Bungalow b, Estado check) {
-		Estado checked = check;
+		JButton btnCerrarSesion = new JButton("Cerrar sesi\u00F3n");
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(btnCerrarSesion, "Has cerrado sesión, volverás a la pantalla del login");
+				new LoginView();
+				frame.dispose();
+			}
+		});
+		btnCerrarSesion.setBackground(new Color(51, 0, 153));
+		btnCerrarSesion.setForeground(new Color(204, 255, 255));
+		btnCerrarSesion.setFont(new Font("Dialog", Font.BOLD, 12));
+		btnCerrarSesion.setBounds(120, 216, 125, 23);
+		frame.getContentPane().add(btnCerrarSesion);
 		
-		return check;
+		btnAnularReservas = new JButton("Anular reservas");
+		btnAnularReservas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean bungalowsOcupados = limpiarReservas(bungalows);
+				if(bungalowsOcupados == true) {
+					JOptionPane.showMessageDialog(btnCerrarSesion, "Has anulado todas las reservas realizadas en esta sesión");
+					new ReservaView(0);
+					frame.dispose();
+				} else {
+					JOptionPane.showMessageDialog(btnCerrarSesion, "Error: no hay ninguna reserva realizada aún");
+				}
+			}
+		});
+		btnAnularReservas.setForeground(new Color(204, 255, 255));
+		btnAnularReservas.setFont(new Font("Dialog", Font.BOLD, 12));
+		btnAnularReservas.setBackground(new Color(51, 0, 153));
+		btnAnularReservas.setBounds(250, 145, 131, 23);
+		frame.getContentPane().add(btnAnularReservas);
+		
 	}
 	
-	/* / / / / / / / / / / /   CAMBIA EL COLOR DEL LABEL Y DEVUELVE EL VALOR DEL TEXTO DE DISPONIBILIDAD,
-								DEPENDIENDO DEL VALOR DEL ANTERIOR MÉTODO  */
+	/* / / / / / / / / / / /   DEVUELVE EL VALOR DEL TEXTO DE DISPONIBILIDAD,
+								DEPENDIENDO DEL ESTADO  */
 	public String checkedReserva(Bungalow b, Estado check) {
+		String textCheck = null;
 		if(check.equals(Estado.Ocupado)) {
 			lblDisponibilidad.setForeground(Color.RED);
 			textCheck = "NO DISPONIBLE";
-		} else {
+		} else if (check.equals(Estado.Disponible)){
 			lblDisponibilidad.setForeground(Color.GREEN);
 			textCheck = "DISPONIBLE";
 		}
 		return textCheck;
+	}
+	
+	// / / / / / / / / CAMBIA EL COLOR DEL LABEL DE DISPONIBILIDAD
+	public String colorCheck(Bungalow b, Estado check) {
+		String colourCheck = null;
+		if(check.equals(Estado.Ocupado)) {
+			colourCheck = "Rojo";
+		} else if (check.equals(Estado.Disponible)){
+			colourCheck = "Verde";
+		}
+		
+		return colourCheck;
+		
+	}
+	
+	
+	/* RECORRE EL ARRAY DE BUNGALOWS: DEVUELVE "FALSE" SI NO HAY NINGÚN BUNGALOW OCUPADO
+	 * PARA QUE ARRIBA, EL PROGRAMA IMPRIMA UN MENSAJE DE ERROR, YA QUE TODOS LOS
+	 * BUNGALOWS ESTÁN DISPONIBLES. DEVUELVE "TRUE" SI HAY AL MENOS UN BUNGALOW OCUPADO, Y EL PROGRAMA RESETEA
+	 * LA VISTA PARA LIMPIAR LAS RESERVAS.
+	 */
+	public boolean limpiarReservas(ArrayList<Bungalow> bungalows) {
+		for (int i=0; i<bungalows.size(); i++) {
+			Bungalow b = bungalows.get(i);
+			if(b.getDisponible().equals(Estado.Ocupado)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
 	}
 }

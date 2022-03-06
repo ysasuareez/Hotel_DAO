@@ -2,25 +2,20 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
 import org.junit.jupiter.api.Test;
 
 import models.Bungalow;
 import models.Bungalow.Estado;
-import views.RegisterView;
 import views.ReservaView;
 
-class TestCambioEstado {
+class TestColorDisp {
 
 	@Test
-	void Estado() {
+	void Color() {
 		
-		/*Iniciamos las pruebas del metodo que cambia la disponibilidad en el JPanel
-		 * de la view. Creamos un bungalow y cambiamos sus estados a ver si cambia 
-		 * también el texto que se imprime.
+		/*Iniciamos las pruebas del metodo que cambia el color de la disponibilidad en el JPanel
+		 * de la view dependiendo de si está disponible o no. Creamos un bungalow y cambiamos sus 
+		 * estados a ver si cambia para comprobar si cambia también  el color del texto que se imprime.
 		 */
 		System.out.println("************ Inicio Prueba Estado ************");
 		Bungalow b = new Bungalow(Estado.Disponible, "Zeus", 4, 5, 3, 200);
@@ -28,11 +23,11 @@ class TestCambioEstado {
 		ReservaView r = new ReservaView(1);
 		
 		
-		assertEquals("DISPONIBLE", r.checkedReserva(b, check));
+		assertEquals("Verde", r.colorCheck(b, check));
 		System.out.println("...");
 		b.setDisponible(Estado.Ocupado);
 		check = b.getDisponible();
-		assertEquals("NO DISPONIBLE", r.checkedReserva(b, check));
+		assertEquals("Rojo", r.colorCheck(b, check));
 		System.out.println("...");
 
 				
