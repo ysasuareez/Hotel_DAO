@@ -17,7 +17,7 @@ public class Bungalow {
 	
 	// / / / / / / / / / / / / CONSTRUCTOR
 	public Bungalow(Estado disponible, String nombre, int personas, int habitaciones, int baños, double precio) {
-		this.disponible = Estado.Disponible;
+		this.disponible = disponible;
 		this.nombre = nombre;
 		this.personas = personas;
 		this.habitaciones = habitaciones;

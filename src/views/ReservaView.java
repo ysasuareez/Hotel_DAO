@@ -276,14 +276,15 @@ public class ReservaView {
 	 * LA VISTA PARA LIMPIAR LAS RESERVAS.
 	 */
 	public boolean limpiarReservas(ArrayList<Bungalow> bungalows) {
+		boolean ocupado = false;
 		for (int i=0; i<bungalows.size(); i++) {
 			Bungalow b = bungalows.get(i);
 			if(b.getDisponible().equals(Estado.Ocupado)) {
-				return true;
+				ocupado = true;
 			}
 		}
 		
-		return false;
+		return ocupado;
 		
 	}
 }

@@ -19,8 +19,8 @@ class TestCambioEstado {
 	void Estado() {
 		
 		/*Iniciamos las pruebas del metodo que cambia la disponibilidad en el JPanel
-		 * de la view. Creamos un bungalow y cambiamos sus estados a ver si cambia 
-		 * también el texto que se imprime.
+		 * de la view. Creamos dos bungalow y cambiamos sus estados para comprobar si 
+		 * cambia también el texto que se imprime.
 		 */
 		System.out.println("************ Inicio Prueba Estado ************");
 		Bungalow b = new Bungalow(Estado.Disponible, "Zeus", 4, 5, 3, 200);
@@ -33,6 +33,17 @@ class TestCambioEstado {
 		b.setDisponible(Estado.Ocupado);
 		check = b.getDisponible();
 		assertEquals("NO DISPONIBLE", r.checkedReserva(b, check));
+		System.out.println("...");
+		
+		
+		Bungalow b2 = new Bungalow(Estado.Ocupado, "Zeus", 4, 5, 3, 200);
+		Estado check2 = b.getDisponible();		
+		
+		assertEquals("NO DISPONIBLE", r.checkedReserva(b2, check2));
+		System.out.println("...");
+		b2.setDisponible(Estado.Disponible);
+		check2 = b2.getDisponible();
+		assertEquals("DISPONIBLE", r.checkedReserva(b2, check2));
 		System.out.println("...");
 
 				
